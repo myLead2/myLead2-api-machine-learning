@@ -1,15 +1,13 @@
 from flask import Flask, request, jsonify, render_template
-from mylead import app, db
+from mylead import app
 from controller.Queue import *
-
-queue = Queue()
 
 #verifica a fila
 @app.route('/varify/queue', methods=['GET'])
 def verifyQueue():
-    if(queue.getStatus()){
+    if(queue.getStatus()):
         return ({"status": "busy", "data": queue.getStatus()})    
-    }
+    
     return ({"status": "free", "data": queue.getStatus()})    
 
 
@@ -18,8 +16,7 @@ def verifyQueue():
 def toDataCleaning():
 
     data  = request.get_json()
-    queue.setStatus(true)
-
-
+    print(data)
+    return jsonify({'status': 'error', 'message': 'Sem ocorrencias', 'data': {}})
 #informa se a fila ta vazia
 #retorna data limpa para guardar no banco
